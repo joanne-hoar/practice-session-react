@@ -1,16 +1,90 @@
-# React + Vite
+# React Practice Session - Module 2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project demonstrates React fundamentals and best practices through a series of hands-on practice activities. It uses Vite as the build tool for fast development and hot module replacement (HMR).
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This practice session covers essential React concepts including:
+- Vite + React project setup and configuration
+- Component architecture (functional and class components)
+- React Hooks (useState, useEffect)
+- Service layer patterns and Promise handling
+- Props and component composition
+- State management patterns
 
-## React Compiler
+## Practice Activities
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### [Module 2 Practice Activity 1: React with Vite Project Setup](Module%202%20Practice%20Activity%201.md)
+**Learning Objective:** Master Vite + React setup needed for Assignment 2.
 
-## Expanding the ESLint configuration
+Topics covered:
+- Creating a Vite + React project from scratch
+- Understanding the Vite project structure
+- Configuring package.json scripts
+- Setting up a proper folder structure for components and services
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### [Module 2 Practice Activity 2: React Functional Components with Hooks](Module%202%20Practice%20Activity%202.md)
+**Learning Objective:** Master React hooks and component patterns needed for Assignment 2.
+
+Topics covered:
+- Creating reusable functional components with props
+- Building both class and functional components
+- Using React Hooks (useState, useEffect)
+- Component composition and rendering patterns
+- Managing component state and lifecycle
+
+### [Module 2 Practice Activity 3: Advanced React Patterns and Service Integration](Module%202%20Practice%20Activity%203.md)
+**Learning Objective:** Master advanced React patterns for service integration.
+
+Topics covered:
+- Creating service layer abstractions (marketService pattern)
+- Working with Promises and asynchronous data
+- Advanced state management techniques
+- Integrating external services with React components
+- Error handling and loading states
+
+## Getting Started
+
+### Prerequisites
+- Node.js installed on your system
+
+### Installation
+```bash
+npm install
+```
+
+### Development
+```bash
+npm run dev
+```
+Visit `http://localhost:5173` to view the application.
+
+### Build
+```bash
+npm run build
+```
+
+### Preview Production Build
+```bash
+npm run preview
+```
+
+## Project Structure
+```
+practice-session-react/
+├── src/
+│   ├── components/
+│   │   ├── common/          # Shared components
+│   │   └── market/          # Market-specific components
+│   ├── services/            # Service layer (API, data handling)
+│   ├── App.jsx              # Main application component
+│   ├── main.jsx             # Application entry point
+│   └── index.css            # Global styles
+├── public/                  # Static assets
+└── package.json             # Dependencies and scripts
+```
+
+## Technologies
+- **React 18** - UI library
+- **Vite** - Build tool and dev server
+- **ESLint** - Code linting
