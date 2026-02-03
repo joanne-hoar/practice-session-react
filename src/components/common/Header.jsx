@@ -1,3 +1,4 @@
+import { Link} from 'react-router-dom';
 import './Header.css';
 
 function Header({title}) {
@@ -8,9 +9,9 @@ function Header({title}) {
         <h1>{title}</h1>
         {/** roughed in navigation links */}
         <nav>
-        <a class="button">Home</a>
-        <a class="button">Products</a>
-    </nav>
+            <Link class="button" to="/">Home</Link>
+            <Link class="button" to="/products">Products</Link>
+        </nav>
         </div>
     );
 }
