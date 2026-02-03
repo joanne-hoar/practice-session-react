@@ -4,7 +4,7 @@ import './HomePage.css'
 function HomePage(){
 
     return(
-        <div>
+        <div className="page-container">
          <img src={storeImage} alt="Cute Storefront Logo" /> 
         </div>
     );
