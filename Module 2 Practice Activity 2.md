@@ -7,8 +7,8 @@ Master React hooks and component patterns needed for Assignment 2.
 ### Prerequisites
 - Complete Practice Activity 1 (Vite + React setup)
 
-### Step 1: Create category-menu-item Component (Reusable Functional Component)
-In your practice-session project, create `src/components/market/CategoryMenuItem.jsx`:
+### Step 1: Create ProductCard Component (Reusable Functional Component)
+In your practice-session project, create `src/components/market.jsx`:
 
 ```jsx
 function CategoryMenuItem({ image, name, description }) {
