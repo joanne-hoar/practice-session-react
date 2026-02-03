@@ -4,16 +4,9 @@ import Header from  './components/common/Header'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  /*
-   <button class="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        */
   return (
     <>
-      <Header />
+      <Header title={'Every Day Market'} />
       <div>        
          <img src={storeImage} alt="Cute Storefront Logo" />        
       </div>

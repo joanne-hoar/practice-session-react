@@ -1,8 +1,17 @@
-function Header() {
+import './Header.css';
+
+function Header({title}) {
+
+    // header display
     return(
-        <>
-        <h1>Joanne's Market</h1>
-        </>
+        <div id="header">
+        <h1>{title}</h1>
+        {/** roughed in navigation links */}
+        <nav>
+        <a class="button">Home</a>
+        <a class="button">Products</a>
+    </nav>
+        </div>
     );
 }
 
