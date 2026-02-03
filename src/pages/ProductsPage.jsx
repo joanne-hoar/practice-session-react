@@ -1,11 +1,10 @@
+import ProductCard from '../components/market/ProductCard';
 import './ProductsPage.css'
 
 function ProductsPage(){
 
     return(
-        <div>
-        <p>Products page works!</p>
-        </div>
+        <ProductCard product={{id:1,name:'Can of Beans', image:'products/can-of-beans.jpg'}}/>
     );
 }
 export default ProductsPage
