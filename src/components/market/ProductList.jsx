@@ -48,11 +48,15 @@ function ProductList() {
       image: "pens.jpg"
     }];
 
+    function addToCart(product) {
+        alert(`Add ${product.name} to cart.`);
+    }
+
     return(
       <div class="products-grid"> 
         {
             allProducts.map(product => (
-                <ProductCard product={product}/>
+                <ProductCard product={product} onAction={addToCart}/>
             ))
         }
       </div>
