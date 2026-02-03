@@ -48,8 +48,46 @@ Create the folder structure:
 - `mkdir src/components/market`
 - `mkdir src/services`
 
-### Step 4: Create Basic App Component
-Update `src/App.jsx` with the structure you'll use in Assignment 2:
+### Step 4: Customize App
+Update `src/App.jsx` with your own content.
+
+### Step 5: Create a Header Component in `src/components/common`
+
+Create the new files for Header.jsx and Header.css. 
+
+``` jsx
+import './Header.css';
+
+function Header({(title)}) {
+    return(
+        <h1>Every Day Market</h1>
+    );
+}
+
+export default Header;
+```
+
+Import into App.jsx.
+
+```jsx
+import storeImage from '/cute-storefront.jpg'
+import Header from  './components/common/Header'
+import './App.css'
+
+function App() {
+  return (
+    <>
+      <Header title={'Every Day Market'} />
+      <div>        
+         <img src={storeImage} alt="Cute Storefront Logo" />        
+      </div>
+    </>
+  )
+}
+
+export default App
+```
+### Step 6: Routing
 
 ```jsx
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
