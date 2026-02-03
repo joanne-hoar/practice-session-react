@@ -42,10 +42,11 @@ In a modern Vite-based React project, the `scripts` section in `package.json` ty
 > Note: Unlike create-react-app, Vite does not include a `test` or `eject` script by default. You can add testing tools separately if needed.
 
 ### Step 3: Set Up Folder Structure
-Create the folder structure:
+Create a folder structure for your project, for example:
 - `mkdir src/components`
 - `mkdir src/components/common`
 - `mkdir src/components/market`
+- `mkdir src/pages`
 - `mkdir src/services`
 
 ### Step 4: Customize App
@@ -60,7 +61,7 @@ import './Header.css';
 
 function Header({(title)}) {
     return(
-        <h1>Every Day Market</h1>
+        <h1>{title}}</h1>
     );
 }
 
@@ -87,100 +88,72 @@ function App() {
 
 export default App
 ```
-### Step 6: Routing
+
+Images can be stored in the `/public` folder. You can re-use the same images and styles from Module 1 or create new styles.
+
+### Step 6: Add Home Page and Products Page
+
+Create components for HomePage and ProductsPage eg. `src/pages/HomePage.jsx`:
+
+
+### Step 7: Routing
+
+Install react-router-dom package:
+
+```bash
+npm install react-router-dom
+```
+
+In `src/main.jsx` use BrowserRouter.
 
 ```jsx
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import ProductsHome from './components/market/ProductsHome';
-import Products from './components/market/Products';
-import Home from './components/Home';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+// ... exisiting code ...
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
+)
+```
 
+Define routing in App.jsx:
+
+```jsx
+import Products from './pages/ProductsPage';
+import Home from './pages/HomePage';
+// ... existing code ...
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <header className="app-header">
-          <h1>Practice Market App</h1>
-          <nav>
-            <Link to="/">Home</Link> | <Link to="/products">Products</Link>
-          </nav>
-        </header>
-        <main>
+    <>
+      <Header title={'Every Day Market'} />
+      <div>        
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<ProductsHome />} />
-            <Route path="/products/list" element={<Products />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/products" element={<Products />} />
           </Routes>
-        </main>
       </div>
-    </Router>
-  );
+    </>
+  )
 }
-
-export default App;
-```
-### Step 5: Add Home, ProductsHome, and Products Components
-
-Create `src/components/Home.jsx`:
-```jsx
-import { useNavigate } from 'react-router-dom';
-
-function Home() {
-  const navigate = useNavigate();
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Welcome to the Practice Market App</h2>
-      <button onClick={() => navigate('/products')}>Go to Products</button>
-    </div>
-  );
-}
-
-export default Home;
 ```
 
-Create `src/components/market/ProductsHome.jsx`:
+Add navigation links, eg. in `src/componenets/Header.jsx` with Link or useNavigation:
+
 ```jsx
-import { useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
-function ProductsHome() {
-  const navigate = useNavigate();
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Products Home</h2>
-      <button onClick={() => navigate('/products/list')}>View All Products</button>
-    </div>
-  );
-}
+//... exisiting code ... 
 
-export default ProductsHome;
-```
+  // in header display  
+        <nav>
+            <Link class="button" to="/">Home</Link>
+            <Link class="button" to="/products">Products</Link>
+        </nav>
 
-Create `src/components/market/Products.jsx`:
-```jsx
-function Products() {
-  // Example static product list
-  const products = [
-    { id: 1, name: 'Cookies', description: 'Delicious cookies', image: '/cookies.jpg' },
-    { id: 2, name: 'Drinks', description: 'Refreshing drinks', image: '/drinks.jpg' }
-  ];
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Products List</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {products.map(product => (
-          <li key={product.id} style={{ margin: '1rem 0' }}>
-            <img src={product.image} alt={product.name} style={{ height: 60 }} />
-            <div><strong>{product.name}</strong></div>
-            <div>{product.description}</div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default Products;
+//... exisiting code ... 
 ```
 
 ---
