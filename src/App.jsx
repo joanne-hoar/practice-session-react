@@ -5,6 +5,7 @@ import Home from './pages/HomePage';
 import './App.css'
 
 function App() {
+  // const pi = 3.14; // sample lint error
   return (
     <>
       <Header title={'Every Day Market'} />
