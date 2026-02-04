@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProductCard from './ProductCard';
+import cartService from '../../services/cartService';
 import './ProductList.css';
 
 function ProductList() {
@@ -49,15 +50,16 @@ function ProductList() {
       image: "pens.jpg"
     }];
 
-    const [count, setCount] = useState(0)
+    const [cart, setCart] = useState(cartService.getCart());
 
     function addToCart(product) {
-        setCount((count) => count + 1)
+        const updatedCart = cartService.addItem(product);
+        setCart(updatedCart);
     }
 
     return(
         <>
-    <h2>Items in cart: {count}</h2>
+    <h2>Items in cart: {cartService.getTotalItems()}</h2>
       <div class="products-grid"> 
         {            
             allProducts.map(product => (
