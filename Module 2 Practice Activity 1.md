@@ -2,16 +2,18 @@
 
 ## React with Vite Project Setup
 
-### Learning Objective
-Master Vite + React setup needed for Assignment 2.
+### Learning Objectives
+- Set up Vite + React development environment
+- Understand modern build tools and project structure
+- Configure and run development server
 
 ### Prerequisites
 - Node.js installed on your system
 
 ### Step 1: Create Vite + React Project
 Create a project:
-- `npm create vite@latest practice-session -- --template react`
-- `cd practice-session`
+- `npm create vite@latest practice-session-react -- --template react`
+- `cd practice-session-react`
 - `npm install`
 - `npm run dev`
 

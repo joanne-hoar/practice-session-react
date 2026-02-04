@@ -1,8 +1,11 @@
 # Front End Frameworks: Module 2: Practice Activity 2
 ## React Functional Components with Hooks
 
-### Learning Objective
-Master React hooks and component patterns needed for Assignment 2.
+### Learning Objectives
+- Create reusable functional components
+- Implement custom event handlers and prop passing
+- Use useState hook for state management
+- Apply useEffect hook for side effects
 
 ### Prerequisites
 - Complete Practice Activity 1 (Vite + React setup)
@@ -41,7 +44,7 @@ Iterate to display all components.
     ];
 
     return(
-      <div class="products-grid"> 
+      <div className="products-grid"> 
         {
             allProducts.map(product => (
                 <ProductCard product={product}/>
@@ -64,7 +67,7 @@ function ProductCard({product}) {
   return(
       <div>
           <h3>{product.name}</h3>
-          <button class="add-btn" onClick={addToCart}>Add to Cart</button>
+          <button className="add-btn" onClick={addToCart}>Add to Cart</button>
       </div>
   );
 }
@@ -78,7 +81,7 @@ function ProductCard({product, onAction}) {
 
     return(
             {/** ...existing code ... */}
-            <button class="add-btn" onClick={() => onAction(product)}>Add to Cart</button>
+            <button className="add-btn" onClick={() => onAction(product)}>Add to Cart</button>
             {/** ...existing code ... */}
 ```
 
@@ -91,7 +94,7 @@ function ProductCard({product, onAction}) {
     }
 
     return(
-      <div class="products-grid"> 
+      <div className="products-grid"> 
         {
             allProducts.map(product => (
                 <ProductCard product={product} onAction={addToCart}/>
@@ -115,7 +118,7 @@ import { useState } from 'react';
     return(
         <>
         <h2>Items in cart: {count}</h2>
-        <div class="products-grid"> 
+        <div className="products-grid"> 
         {
             allProducts.map(product => (
                 <ProductCard product={product} onAction={addToCart}/>

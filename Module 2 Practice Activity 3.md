@@ -2,213 +2,240 @@
 
 ## Advanced React Patterns and Service Integration
 
-### Learning Objective
-Master advanced React patterns needed for Assignment 2's marketService integration: service abstraction, Promise handling, and advanced state management.
+### Learning Objectives
+- Implement service layer pattern for data management
+- Use Promises for asynchronous operations
+- Apply useEffect hook for lifecycle management
+- Manage interactive state with visual feedback
 
 ### Prerequisites
 - Complete Practice Activities 1-2 (Vite setup and component hooks)
 
-### Step 1: Create marketService
-Create `src/services/marketService.js`:
+---
+
+### Step 1: Create productService with Data
+
+Create `src/services/productService.js` to manage product data:
 
 ```javascript
-// marketService pattern
-class MarketService {
-  loadCategories() {
-    // Return Promise<{ name: string }[]>
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          const categories = [
-            { name: 'Gaming' },
-            { name: 'Music' },
-            { name: 'Travel' },
-            { name: 'Fitness' },
-            { name: 'Cooking' }
-          ];
-          resolve(categories);
-        } catch (error) {
-          reject(error);
-        }
-      }, 2000); // 2-second delay
-    });
+const products = [
+    {
+      id: 1,
+      name: "Laptop"   
+    },
+    {
+      id: 2,
+      name: "Tablet"
+    }
+    // ... more products ...
+    ];
+
+class ProductService {
+  getAllProducts() {
+    return products;
   }
 
-  // Additional method for expansion
-  loadProductsByCategory(categoryName) {
+  getProductById(id) {
+    return products.find(product => product.id === id);
+  }
+}
+
+export default new ProductService();
+```
+
+For simplicity, showing a refactor of ProductsPage to manage and display the products, removing ProductList component as a middleman.
+
+Integrate the service using your existing ProductList component from Activity 2.
+
+```jsx
+import { useState } from 'react';
+import productService from '../services/productService';
+// ... other imports ...
+
+function ProductsPage(){
+    const allProducts = productService.getAllProducts();
+    // ... existing state and handlers ...
+
+    return(
+            {/** ... existing JSX ... */}
+    );
+}
+```
+
+### Step 2: Update productService to Return Promises
+
+Modify your existing `src/services/productService.js` to simulate asynchronous data loading:
+
+```javascript
+// ... existing products array ...
+
+class ProductService {
+  getAllProducts() {
+    // Return Promise with 2-second delay (simulates API call)
     return new Promise((resolve) => {
       setTimeout(() => {
-        const products = {
-          'Gaming': [
-            { id: 1, name: 'Gaming Laptop', description: 'High-performance laptop', image: '/game-laptop.jpg' },
-            { id: 2, name: 'Gaming Mouse', description: 'Precision gaming mouse', image: '/game-mouse.jpg' }
-          ],
-          'Music': [
-            { id: 3, name: 'Headphones', description: 'Premium audio headphones', image: '/headphones.jpg' },
-            { id: 4, name: 'Guitar', description: 'Acoustic guitar', image: '/guitar.jpg' }
-          ]
-          // Add more categories as needed
-        };
-        resolve(products[categoryName] || []);
+        resolve(products);
       }, 2000);
     });
   }
+
+  // ... existing getProductById method ...
 }
 
-export default new MarketService();
+export default new ProductService();
 ```
 
-### Step 2: Create Home Component with Category Navigation
+**Key Concepts:**
+- Service methods return **Promises** instead of direct data
+- `setTimeout()` creates a 2-second delay to simulate network latency
+- This pattern prepares you for real API calls in production apps
 
-Create `src/components/Home.jsx`:
+---
+
+### Step 3: Update ProductsPage with useEffect and Loading State
+
+Modify `src/pages/ProductsPage.jsx` to fetch products asynchronously:
+
 ```jsx
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import marketService from '../services/marketService';
+import { useState, useEffect } from 'react';
+// ... existing imports ...
 
-function Home() {
-  const [categories, setCategories] = useState([]);
-  const navigate = useNavigate();
+function ProductsPage(){
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    marketService.loadCategories().then(setCategories);
-  }, []);
+    // useEffect to fetch products on first render
+    useEffect(() => {
+        productService.getAllProducts()
+            .then(data => {
+                setProducts(data);
+                setLoading(false);
+            });
+    }, []); // Empty dependency array = run once on mount
 
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Welcome to the Practice Market App</h2>
-      <p>Select a category to view products:</p>
-      {categories.map((cat) => (
-        <button key={cat.name} style={{ margin: '0.5rem' }} onClick={() => navigate(`/products?category=${cat.name}`)}>
-          {cat.name}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-export default Home;
-```
-
-### Step 3: Create Products Component with Add to Cart and Cart Display
-
-Create `src/components/market/Products.jsx`:
-```jsx
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import marketService from '../../services/marketService';
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-function Products() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [quantities, setQuantities] = useState({});
-  const [showCart, setShowCart] = useState(false);
-  const query = useQuery();
-  const category = query.get('category') || 'Gaming';
-
-  useEffect(() => {
-    marketService.loadProductsByCategory(category).then(setProducts);
-  }, [category]);
-
-  const handleQuantityChange = (id, value) => {
-    setQuantities((q) => ({ ...q, [id]: value }));
-  };
-
-  const handleAddToCart = (product) => {
-    const qty = parseInt(quantities[product.id] || 1, 10);
-    setCart((c) => {
-      const existing = c.find((item) => item.id === product.id);
-      if (existing) {
-        return c.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + qty } : item
+    // Show loading state while fetching
+    if (loading) {
+        return (
+            <div>
+                <h2>Loading products...</h2>
+            </div>
         );
-      }
-      return [...c, { ...product, quantity: qty }];
-    });
-  };
+    }
 
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Products in {category}</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {products.map((product) => (
-          <li key={product.id} style={{ margin: '1rem 0' }}>
-            <img src={product.image} alt={product.name} style={{ height: 60 }} />
-            <div><strong>{product.name}</strong></div>
-            <div>{product.description}</div>
-            <input
-              type="number"
-              min="1"
-              value={quantities[product.id] || 1}
-              onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-              style={{ width: 50, margin: '0.5rem' }}
-            />
-            <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={() => setShowCart((s) => !s)} style={{ margin: '1rem' }}>
-        {showCart ? 'Hide Cart' : 'Submit & Show Cart'}
-      </button>
-      {showCart && (
-        <div style={{ marginTop: '2rem' }}>
-          <h3>Cart</h3>
-          {cart.length === 0 ? (
-            <p>No products in cart.</p>
-          ) : (
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {cart.map((item) => (
-                <li key={item.id}>
-                  {item.name} x {item.quantity}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-    </div>
-  );
+    return(
+            {/** ... existing JSX ... */}
+    );
 }
 
-export default Products;
+export default ProductsPage;
 ```
 
-### Step 4: Integrate Routing for Home and Products
+**Key Concepts:**
+- **`useEffect()`** hook runs after component renders
+- Empty dependency array `[]` means it runs **only once** on mount
+- **`.then()`** handles the Promise when data is ready
+- **Loading state** provides user feedback during async operations
+- **Conditional rendering** shows different UI based on loading status
 
-Update your `src/App.jsx` to include routing for Home and Products:
+---
+
+### Step 4: Add Product Selection with Visual Feedback
+
+Implement interactive product selection to demonstrate advanced state management and component interaction.
+
+**Update ProductsPage.jsx** to track selected product:
 
 ```jsx
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Products from './components/market/Products';
-import Home from './components/Home';
-import './App.css';
+function ProductsPage(){
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <header className="app-header">
-          <h1>Practice Market App</h1>
-          <nav>
-            <Link to="/">Home</Link> | <Link to="/products">Products</Link>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
-  );
+const [selectedId, setSelectedId] = useState(null); // Track selected product
+
+    // ... existing code ...
+
+    function addToCart(product) {
+      // ... existing code ---
+    }
+
+    function selectProduct(product) {
+        setSelectedId(product.id);
+        console.log(`Selected product: ${product.name}`);
+    }
+
+    const selectedProduct = products.find(p => p.id === selectedId);
+
+    // ... existing code ---
+    return(
+        <div>
+            <h2>Items in cart: {totalItems}</h2>
+            {selectedProduct && (
+                <div className="selected-product-details">
+                    <h3>{selectedProduct.name}</h3>
+                    <p>{selectedProduct.description}</p>
+                </div>
+            )}
+            <div className="products-grid">
+                {products.map(product => (
+                    <ProductCard 
+                        key={product.id}
+                        product={product}
+                        onAction={addToCart}
+                        onSelect={selectProduct}
+                        isSelected={product.id === selectedId}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+```
+
+**Update ProductCard.jsx** for selection interaction:
+
+```jsx
+function ProductCard({product, onAction, onSelect, quantity, isSelected}) {
+    return(
+        <div 
+            className={`product-card ${isSelected ? 'selected' : ''}`}
+            onClick={() => onSelect && onSelect(product)}
+        >
+            {/** ... existing product display (h3, img) ... */}
+            {quantity ? (
+                <p>Quantity: {quantity}</p>
+            ) : (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent card selection when clicking button
+                        onAction(product);
+                    }}
+                >
+                    Add to Cart
+                </button>
+            )}
+        </div>
+    );
+}
+```
+
+**Add CSS for selected state** in `ProductCard.css`:
+
+```css
+.product-card {
+  /* ... existing styles ... */
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-export default App;
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-card.selected {
+  background: lightgray;
+  border: 3px solid gray;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
 ```
 
 ---
