@@ -167,12 +167,6 @@ const [selectedId, setSelectedId] = useState(null); // Track selected product
     return(
         <div>
             <h2>Items in cart: {totalItems}</h2>
-            {selectedProduct && (
-                <div className="selected-product-details">
-                    <h3>{selectedProduct.name}</h3>
-                    <p>{selectedProduct.description}</p>
-                </div>
-            )}
             <div className="products-grid">
                 {products.map(product => (
                     <ProductCard 
