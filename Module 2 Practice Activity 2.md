@@ -52,13 +52,73 @@ Iterate to display all components.
 ```
 
 ### Step 2: Custom Event
+Add a button to ProductCard:
 
 ```jsx
+function ProductCard({product}) {
+
+  function addToCart() {
+    alert(`Add ${product.name} to cart.`);
+  }
+
+  return(
+      <div>
+          <h3>{product.name}</h3>
+          <button class="add-btn" onClick={addToCart}>Add to Cart</button>
+      </div>
+  );
+}
+```
+
+Move the event handler to ProductList and propogate the event by passing:
+
+```jsx
+// ... exisiting code ...
+function ProductCard({product, onAction}) {
+
+    return(
+            {/** ...existing code ... */}
+            <button class="add-btn" onClick={() => onAction(product)}>Add to Cart</button>
+            {/** ...existing code ... */}
+```
+
+```jsx
+  // ... exisiting code ...
+  function ProductList() {
+    // ... exisiting code ...
+    function addToCart(product) {
+        alert(`Add ${product.name} to cart.`);
+    }
+
+    return(
+      <div class="products-grid"> 
+        {
+            allProducts.map(product => (
+                <ProductCard product={product} onAction={addToCart}/>
 ```
 
 ### Step 3: Use State
 
+Keep a counter for items in cart in ProductList:
+
 ```jsx
+import { useState } from 'react';
+  // ... exisiting code ...
+  function ProductList() {
+    // ... exisiting code ...
+   const [count, setCount] = useState(0)
+
+    function addToCart(product) {
+      setCount((count) => count + 1)
+    }
+
+    return(
+        <>
+        <h2>Items in cart: {count}</h2>
+        <div class="products-grid"> 
+        {
+            allProducts.map(product => (
+                <ProductCard product={product} onAction={addToCart}/>
 ```
 
 ### Step 4: (Bonus) Create Separate Header and Footer Components
