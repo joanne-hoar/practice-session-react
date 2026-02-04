@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '../components/market/ProductCard';
+import ProductDescription from '../components/market/ProductDescription';
 import productService from '../services/productService';
 import cartService from '../services/cartService';
 import './ProductsPage.css';
@@ -26,7 +27,10 @@ function ProductsPage(){
 
     function selectProduct(product) {
         setSelectedId(product.id);
-        console.log(`Selected product: ${product.name}`);
+    }
+
+    function clearSelection() {
+        setSelectedId(null);
     }
 
     const totalItems = cartService.getTotalItems();
@@ -44,10 +48,10 @@ function ProductsPage(){
         <div className="page-container">
             <h2>Items in cart: {totalItems}</h2>
             {selectedProduct && (
-                <div className="selected-product-details">
-                    <h3>{selectedProduct.name}</h3>
-                    <p>{selectedProduct.description}</p>
-                </div>
+                <ProductDescription 
+                    product={selectedProduct} 
+                    onClose={clearSelection} 
+                />
             )}
             <div className="products-grid">
                 {products.map(product => (

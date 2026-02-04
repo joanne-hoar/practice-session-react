@@ -9,9 +9,9 @@ function Header({title}) {
         <h1>{title}</h1>
         {/** roughed in navigation links */}
         <nav>
-            <Link class="button" to="/">Home</Link>
-            <Link class="button" to="/products">Products</Link>
-            <Link class="button" to="/cart">Cart</Link>
+            <Link className="button" to="/">Home</Link>
+            <Link className="button" to="/products">Products</Link>
+            <Link className="button" to="/cart">Cart</Link>
         </nav>
         </div>
     );

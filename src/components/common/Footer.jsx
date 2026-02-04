@@ -8,24 +8,24 @@ function Footer({title}) {
   
     // header display
     return(
-<div id="footer" class="footer">
-  <div class="footer-container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <p class="copyright">
+<div id="footer" className="footer">
+  <div className="footer-container">
+    <div className="footer-content">
+      <div className="footer-section">
+        <p className="copyright">
           © 2026 Joanne, Front End Frameworks T0511
         </p>
-        <div class="footer-tech">
-          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" class="version-badge">React {reactVersion}</a>
-          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" class="version-badge">Vite {viteVersion}</a>
+        <div className="footer-tech">
+          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="version-badge">React {reactVersion}</a>
+          <a href="https://vite.dev/" target="_blank" rel="noopener noreferrer" className="version-badge">Vite {viteVersion}</a>
         </div>
       </div>
       
-      <div class="footer-section credits">
-        <p class="design-credit">
+      <div className="footer-section credits">
+        <p className="design-credit">
           Design assets generated using <strong><a href="https://recraft.ai/" target="_blank" rel="noopener noreferrer"><strong>Recraft</strong></a></strong>
         </p>
-        <p class="design-credit">
+        <p className="design-credit">
           Development assisted by <strong><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">GitHub Copilot</a></strong> with <strong><a href="https://www.anthropic.com/claude/sonnet" target="_blank" rel="noopener noreferrer">Claude Sonnet</a></strong> and <strong><a href="https://search.google/intl/en-CA/ways-to-search/ai-overviews/" target="_blank" rel="noopener noreferrer">Google AI Overview</a></strong>
         </p>
       </div>
