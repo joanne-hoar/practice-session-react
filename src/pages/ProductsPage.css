@@ -5,3 +5,25 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.selected-product-details {
+  background: linear-gradient(145deg, #e0e6c4 0%, #d4dab8 100%);
+  border: 2px solid #837d41;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0 2rem 0;
+  box-shadow: 0 4px 8px rgba(131, 125, 65, 0.2);
+}
+
+.selected-product-details h3 {
+  color: #6d4c41;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.selected-product-details p {
+  color: #5a5442;
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
