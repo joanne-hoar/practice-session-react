@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ProductList from '../components/market/ProductList';
+import ProductCard from '../components/market/ProductCard';
 import productService from '../services/productService';
 import cartService from '../services/cartService';
 import './ProductsPage.css';
@@ -37,17 +37,22 @@ function ProductsPage(){
                 <h2>Loading products...</h2>
             </div>
         );
-                items={products} 
-                onAddToCart={addToCart}
-                onSelectProduct={selectProduct}
-                selectedId={selectedId}
-           
     }
 
     return(
         <div className="page-container">
             <h2>Items in cart: {totalItems}</h2>
-            <ProductList items={products} onAddToCart={addToCart} />
+            <div className="products-grid">
+                {products.map(product => (
+                    <ProductCard 
+                        key={product.id}
+                        product={product}
+                        onAction={addToCart}
+                        onSelect={selectProduct}
+                        isSelected={product.id === selectedId}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

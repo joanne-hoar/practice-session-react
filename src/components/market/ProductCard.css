@@ -1,3 +1,13 @@
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
 .product-card {
   border: 2px solid #6d4c41;
   border-radius: 12px;

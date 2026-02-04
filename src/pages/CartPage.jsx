@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import cartService from '../services/cartService';
-import ProductList from '../components/market/ProductList';
+import ProductCard from '../components/market/ProductCard';
 import './ProductsPage.css';
 
 function CartPage() {
@@ -17,7 +17,15 @@ function CartPage() {
             ) : (
                 <>
                     <h2>Total Items: {totalItems}</h2>
-                    <ProductList items={cartItems} />
+                    <div className="products-grid">
+                        {cartItems.map(item => (
+                            <ProductCard 
+                                key={item.product.id}
+                                product={item.product}
+                                quantity={item.quantity}
+                            />
+                        ))}
+                    </div>
                 </>
             )}
         </div>
