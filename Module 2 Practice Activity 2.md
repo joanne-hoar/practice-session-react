@@ -97,9 +97,9 @@ function ProductCard({product, onAction}) {
                 <ProductCard product={product} onAction={addToCart}/>
 ```
 
-### Step 3: Use State
+### Step 3: useState Hook (managing component state)
 
-Keep a counter for items in cart in ProductList:
+Manage a counter for items in cart in ProductList:
 
 ```jsx
 import { useState } from 'react';
