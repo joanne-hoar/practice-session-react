@@ -8,6 +8,7 @@ function ProductsPage(){
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState(cartService.getCart());
+    const [selectedId, setSelectedId] = useState(null);
 
     // useEffect to fetch products on first render
     useEffect(() => {
@@ -23,6 +24,11 @@ function ProductsPage(){
         setCart(updatedCart);
     }
 
+    function selectProduct(product) {
+        setSelectedId(product.id);
+        console.log(`Selected product: ${product.name}`);
+    }
+
     const totalItems = cartService.getTotalItems();
 
     if (loading) {
@@ -31,6 +37,11 @@ function ProductsPage(){
                 <h2>Loading products...</h2>
             </div>
         );
+                items={products} 
+                onAddToCart={addToCart}
+                onSelectProduct={selectProduct}
+                selectedId={selectedId}
+           
     }
 
     return(

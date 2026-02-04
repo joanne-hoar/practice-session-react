@@ -1,7 +1,7 @@
 import ProductCard from './ProductCard';
 import './ProductList.css';
 
-function ProductList({ items, onAddToCart }) {
+function ProductList({ items, onAddToCart, onSelectProduct, selectedId }) {
     return(
         <div className="products-grid"> 
             {items.map(item => {
@@ -10,7 +10,13 @@ function ProductList({ items, onAddToCart }) {
                 const quantity = item.quantity;
                 
                 return (
-                    <ProductCard product={product} onAction={onAddToCart} quantity={quantity}
+                    <ProductCard 
+                        key={product.id}
+                        product={product} 
+                        onAction={onAddToCart}
+                        onSelect={onSelectProduct}
+                        quantity={quantity}
+                        isSelected={product.id === selectedId}
                     />
                 );
             })}
