@@ -4,6 +4,7 @@ import Products from './pages/ProductsPage';
 import Home from './pages/HomePage';
 import Cart from './pages/CartPage';
 import './App.css'
+import Footer from './components/common/Footer';
 
 function App() {
   // const pi = 3.14; // sample lint error
@@ -18,6 +19,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
           </Routes>
       </div>
+      <Footer />
     </>
   )
 }
