@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import ProductCard from './ProductCard';
 import './ProductList.css';
 
@@ -48,18 +49,23 @@ function ProductList() {
       image: "pens.jpg"
     }];
 
+    const [count, setCount] = useState(0)
+
     function addToCart(product) {
-        alert(`Add ${product.name} to cart.`);
+        setCount((count) => count + 1)
     }
 
     return(
+        <>
+    <h2>Items in cart: {count}</h2>
       <div class="products-grid"> 
-        {
+        {            
             allProducts.map(product => (
                 <ProductCard product={product} onAction={addToCart}/>
             ))
         }
       </div>
+      </>
     );
 }
 
