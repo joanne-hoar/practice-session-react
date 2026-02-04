@@ -11,6 +11,7 @@ function Header({title}) {
         <nav>
             <Link class="button" to="/">Home</Link>
             <Link class="button" to="/products">Products</Link>
+            <Link class="button" to="/cart">Cart</Link>
         </nav>
         </div>
     );
